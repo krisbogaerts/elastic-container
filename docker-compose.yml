@@ -1,5 +1,11 @@
 version: "2.2"
 
+# To Join any other app setup using another network, change name and set external = true
+networks:
+  default:
+    name: elastic
+    external: false
+
 services:
   setup:
     image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
@@ -132,6 +138,7 @@ services:
       - SERVER_SSL_CERTIFICATE=config/certs/kibana/kibana.crt
       - SERVER_SSL_KEY=config/certs/kibana/kibana.key
       - SERVER_SSL_CERTIFICATEAUTHORITIES=config/certs/ca/ca.crt
+      - SERVER_PUBLICBASEURL=${SERVER_PUBLICBASEURL}
     mem_limit: ${MEM_LIMIT}
     healthcheck:
       test:
