@@ -132,7 +132,7 @@ configure_kbn() {
 get_host_ip() {
   os=$(uname -s)
   if [ "${os}" == "Linux" ]; then
-    ipvar=$(hostname -I | awk '{ print $1}')
+    ipvar=$(hostname -I | awk '{ print $2}')
   elif [ "${os}" == "Darwin" ]; then
     ipvar=$(ifconfig en0 | awk '$1 == "inet" {print $2}')
   fi
@@ -212,7 +212,7 @@ case "${ACTION}" in
 
   echo "Starting Elastic Stack network and containers"
 
-  ${COMPOSE} up -d --no-deps 
+  ${COMPOSE} up -d --no-deps
 
   configure_kbn 1>&2 2>&3
 
@@ -236,7 +236,7 @@ case "${ACTION}" in
 "stop")
   echo "Stopping running containers."
 
-  ${COMPOSE} stop 
+  ${COMPOSE} stop
   ;;
 
 "destroy")
